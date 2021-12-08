@@ -1,8 +1,8 @@
 #Credentials
 provider "aws" {
-  access_key = var.access-key
-  secret_key = var.secret-key
   region     = var.region
+  shared_credentials_file = "$HOME/aws/credentials"
+  profile = "default"
 }
 #-------------------------------------------------------
 
@@ -11,7 +11,7 @@ resource "aws_vpc" "vpc" {
   cidr_block           = var.cidr-for-vpc
   enable_dns_hostnames = true
   tags                 = {
-    Name = "vpc ${var.Project-name}"
+    Name = "vpc ${var.project-name}"
   }
 }
 
@@ -19,7 +19,7 @@ resource "aws_vpc" "vpc2" {
   cidr_block           = var.cidr-for-vpc-2
   enable_dns_hostnames = true
   tags                 = {
-    Name = "vpc 2 ${var.Project-name}"
+    Name = "vpc 2 ${var.project-name}"
   }
 }
 #-------------------------------------------------------
@@ -30,7 +30,7 @@ resource "aws_subnet" "private" {
   vpc_id            = aws_vpc.vpc.id
   availability_zone = var.availability-zone-a
   tags              = {
-    Name = "private-A ${var.Project-name}"
+    Name = "private-A ${var.project-name}"
   }
 }
 resource "aws_subnet" "private2" {
@@ -38,7 +38,7 @@ resource "aws_subnet" "private2" {
   vpc_id            = aws_vpc.vpc2.id
   availability_zone = var.availability-zone-a-2
   tags              = {
-    Name = "private-A-2 ${var.Project-name}"
+    Name = "private-A-2 ${var.project-name}"
   }
 }
 #-------------------------------------------------------
@@ -50,7 +50,7 @@ resource "aws_subnet" "public" {
   map_public_ip_on_launch = true
   availability_zone       = var.availability-zone-a
   tags                    = {
-    Name = "public-A ${var.Project-name}"
+    Name = "public-A ${var.project-name}"
   }
 }
 resource "aws_subnet" "public2" {
@@ -59,7 +59,7 @@ resource "aws_subnet" "public2" {
   map_public_ip_on_launch = true
   availability_zone       = var.availability-zone-a-2
   tags                    = {
-    Name = "public-A ${var.Project-name}"
+    Name = "public-A ${var.project-name}"
   }
 }
 #-------------------------------------------------------
@@ -68,7 +68,7 @@ resource "aws_subnet" "public2" {
 resource "aws_internet_gateway" "IGW" {
   vpc_id = aws_vpc.vpc.id
   tags   = {
-    Name = "internetGateway ${var.Project-name}"
+    Name = "internetGateway ${var.project-name}"
   }
 }
 
@@ -78,7 +78,7 @@ resource "aws_eip" "lb" {
 resource "aws_internet_gateway" "IGW2" {
   vpc_id = aws_vpc.vpc2.id
   tags   = {
-    Name = "internetGateway 2 ${var.Project-name}"
+    Name = "internetGateway 2 ${var.project-name}"
   }
 }
 
@@ -92,14 +92,14 @@ resource "aws_nat_gateway" "nat" {
   allocation_id = aws_eip.lb.id
   subnet_id     = aws_subnet.public.id
   tags          = {
-    Name = "natGateway ${var.Project-name}"
+    Name = "natGateway ${var.project-name}"
   }
 }
 resource "aws_nat_gateway" "nat2" {
   allocation_id = aws_eip.lb2.id
   subnet_id     = aws_subnet.public2.id
   tags          = {
-    Name = "natGateway 2 ${var.Project-name}"
+    Name = "natGateway 2 ${var.project-name}"
   }
 }
 #-------------------------------------------------------
@@ -118,7 +118,7 @@ resource "aws_route_table" "for_public" {
     gateway_id = aws_internet_gateway.IGW.id
   }
   tags = {
-    Name = "publicRouteTable ${var.Project-name}"
+    Name = "publicRouteTable ${var.project-name}"
   }
 }
 resource "aws_route_table" "for_public2" {
@@ -134,7 +134,7 @@ resource "aws_route_table" "for_public2" {
     gateway_id = aws_internet_gateway.IGW2.id
   }
   tags = {
-    Name = "publicRouteTable ${var.Project-name}"
+    Name = "publicRouteTable ${var.project-name}"
   }
 }
 #-------------------------------------------------------
@@ -165,7 +165,7 @@ resource "aws_route_table" "nat_for_private" {
     gateway_id = aws_nat_gateway.nat.id
   }
   tags = {
-    Name = "privateRouteTable ${var.Project-name}"
+    Name = "privateRouteTable ${var.project-name}"
   }
 }
 resource "aws_route_table" "nat_for_private2" {
@@ -181,7 +181,7 @@ resource "aws_route_table" "nat_for_private2" {
     gateway_id = aws_nat_gateway.nat2.id
   }
   tags = {
-    Name = "privateRouteTable 2 ${var.Project-name}"
+    Name = "privateRouteTable 2 ${var.project-name}"
   }
 }
 #-------------------------------------------------------
@@ -275,7 +275,7 @@ resource "aws_network_acl" "acl2" {
 #Security Group for Bastion
 resource "aws_security_group" "bastion" {
   vpc_id      = aws_vpc.vpc.id
-  name        = "bastion-host ${var.Project-name}"
+  name        = "bastion-host ${var.project-name}"
   description = "ssh-http-https"
 
   ####Inbound rules
@@ -301,13 +301,13 @@ resource "aws_security_group" "bastion" {
     cidr_blocks = [var.anywhere-cidr]
   }
   tags = {
-    Name = "security terraform bastion ${var.Project-name}"
+    Name = "security terraform bastion ${var.project-name}"
   }
 }
 
 resource "aws_security_group" "bastion2" {
   vpc_id      = aws_vpc.vpc2.id
-  name        = "bastion-host ${var.Project-name}"
+  name        = "bastion-host ${var.project-name}"
   description = "ssh-http-https"
 
   ####Inbound rules
@@ -333,7 +333,7 @@ resource "aws_security_group" "bastion2" {
     cidr_blocks = [var.anywhere-cidr]
   }
   tags = {
-    Name = "security terraform bastion 2 ${var.Project-name}"
+    Name = "security terraform bastion 2 ${var.project-name}"
   }
 }
 #-------------------------------------------------------

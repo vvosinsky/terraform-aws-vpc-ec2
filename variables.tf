@@ -1,24 +1,20 @@
 #General
-variable "Project-name" {
+variable "project-name" {
   description = "Name of Project"
   default = "AWS"
 }
 
 #Credentials
-variable "access-key" {
-  description = "AWS Access-Key"
-  type = string
-  default = ""
-}
-variable "secret-key" {
-  description = "AWS Secret-Key"
-  type = string
-  default = ""
-}
 variable "region" {
   description = "AWS Region"
   type = string
   default = "eu-central-1"
+}
+
+#EC2 Key
+variable "access-key-name" {
+  description = "AWS ec2 key name: "
+  default = "ec2-key"
 }
 
 #Bastion Host
@@ -29,10 +25,6 @@ variable "ami-bastion" {
 variable "instance-type" {
   description = "AWS Instance type: "
   default = "t2.micro"
-}
-variable "access-key-name" {
-  description = "Name for instance access key"
-  default = ""
 }
 
 #VPC 1

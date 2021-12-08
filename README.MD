@@ -7,7 +7,6 @@
 
 **You need to fill in the parameters in the variables for**
 * `./variables.tf`
-* `./modules/vpc/variablesa.tf`
 * `main.tf`
 
 **Terraform must be installed on your machine!**

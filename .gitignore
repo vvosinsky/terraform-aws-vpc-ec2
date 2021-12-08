@@ -1,2 +1,9 @@
 #IDE
 .idea
+
+#Terraform
+.terraform
+.terraform.lock.hcl
+
+#Key
+*.pem
