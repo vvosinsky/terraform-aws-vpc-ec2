@@ -22,4 +22,4 @@
 * Launch 2 Private Host EC2 Instance
 
 ## License
-Scripts is Copyright © 2015-2021 Codica. It is released under the [MIT License](https://opensource.org/licenses/MIT).
+Scripts is Copyright © 2015-2021. It is released under the [MIT License](https://opensource.org/licenses/MIT).
